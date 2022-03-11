@@ -3,10 +3,12 @@ package com.latex.latexjavafx;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -38,16 +40,22 @@ public class Latex extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         loadFonts();
+//        double[][] matrix = {
+//                {1, 2, 0, 5, 1, 0, 0, 0},
+//                {0, 5, 5, 9, 0, 1, 0, 0},
+//                {2, 0, 4, 5, 0, 0, 1, 0},
+//                {6, 5, 1, 8, 0, 0, 0, 1}
+//        };
         double[][] matrix = {
-                {1, 2, 0, 5, 1, 0, 0, 0},
-                {0, 5, 5, 9, 0, 1, 0, 0},
-                {2, 0, 4, 5, 0, 0, 1, 0},
-                {6, 5, 1, 8, 0, 0, 0, 1}
+                {1,2,3},
+                {331,2,3},
+                {12,134,0},
         };
         List<String> latexStrings = new ArrayList<>();
         List<String> information = new ArrayList<>();
-        VBox stack = new VBox(new MyCanvas(Utils.parseMatrixToLatex(matrix)));
-        stack.setPrefWidth(stage.getWidth());
+        VBox vbox = new VBox(new MyCanvas(Utils.parseMatrixToLatex(matrix)));
+        vbox.setPrefWidth(800);
+
         Fraction fraction = Fraction.of(-2);
         System.out.println(fraction.toFracLatex());
 
@@ -62,25 +70,32 @@ public class Latex extends Application {
             MyCanvas canvas = new MyCanvas(latex);
             Label label = new Label(text);
             label.setFont(new Font(20));
+            label.setPrefWidth(600);
+            label.setMinHeight(30);
             label.setPadding(new Insets(10, 10, 10, 10));
-            stack.getChildren().add(label);
-            stack.getChildren().add(canvas);
+            HBox hbox = new HBox(canvas,label);
+            hbox.setAlignment(Pos.CENTER);
+//            vbox.getChildren().add(label);
+            vbox.getChildren().add(hbox);
             Separator sep = new Separator();
             sep.setOrientation(Orientation.HORIZONTAL);
 
-            stack.getChildren().add(sep);
+            vbox.getChildren().add(sep);
         }
 
         ScrollPane s1 = new ScrollPane();
-        s1.setContent(stack);
-        s1.setPrefWidth(800);
-
-
+        s1.setContent(vbox);
         stage.setScene(new Scene(s1));
         stage.setTitle("FXGraphics2DDemo3.java");
         stage.setHeight(800);
         stage.setWidth(800);
         stage.show();
+
+
+        System.out.println(vbox.getWidth());
+        System.out.println(s1.getWidth());
+
+
 
     }
 }

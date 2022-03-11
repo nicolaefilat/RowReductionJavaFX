@@ -7,6 +7,8 @@ import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXIcon;
 
+import java.awt.*;
+
 public class MyCanvas extends Canvas {
     private FXGraphics2D g2;
 
@@ -21,9 +23,10 @@ public class MyCanvas extends Canvas {
         TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 20);
         // the 'Box' seems to be the thing we can draw directly to Graphics2D
         this.box = icon.getBox();
+        setWidth(icon.getTrueIconWidth());
+        setHeight(icon.getTrueIconHeight() + 20 * 5);
 
-        System.out.println(getWidth());
-        System.out.println(getHeight());
+
         draw();
         // Redraw canvas when size changes.
         widthProperty().addListener(evt -> draw());
@@ -31,8 +34,6 @@ public class MyCanvas extends Canvas {
     }
 
     private void draw() {
-        setWidth(800);
-        setHeight(200);
 
         double width = getWidth();
         double height = getHeight();

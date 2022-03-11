@@ -82,6 +82,8 @@ public class RowReduction {
             System.out.println("The column is " + column);
             System.out.println("Divide row " + currentRow + " with " + v[currentRow][column]);
             Fraction pivot = v[currentRow][column];
+            if(pivot.equals(Fraction.ONE)) // skip if the pivot is one
+                continue;
             for (int col = column; col < columns; col++) {
                 System.out.println("Dividing " + v[currentRow][col] + " with " + pivot);
                 v[currentRow][col] = v[currentRow][col].divide(pivot);
