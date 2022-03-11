@@ -2,9 +2,11 @@ package com.latex.latexjavafx;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -32,34 +34,25 @@ public class Latex extends Application {
         javafx.scene.text.Font.loadFont(Latex.class.getResourceAsStream("/org/jlm_cmr10.ttf"), 1);
     }
 
-    private String parseMatrixToLatex(double[][] v) {
-        StringBuilder answer = new StringBuilder("\\begin{bmatrix}\n");
-        for (double[] doubles : v) {
-            for (int j = 0; j < doubles.length; j++) {
-                answer.append(doubles[j]);
-                if (j + 1 != doubles.length)
-                    answer.append(" & ");
-            }
-            answer.append("\\\\");
-        }
-        answer.append("\\end{bmatrix}");
-        return answer.toString();
-    }
 
     @Override
     public void start(Stage stage) throws Exception {
         loadFonts();
         double[][] matrix = {
-                {-4, -5, 20, 1},
-                {0, 0, 0, 5},
-                {8, 15, -60, -4},
+                {1, 2, 0, 5, 1, 0, 0, 0},
+                {0, 5, 5, 9, 0, 1, 0, 0},
+                {2, 0, 4, 5, 0, 0, 1, 0},
+                {6, 5, 1, 8, 0, 0, 0, 1}
         };
         List<String> latexStrings = new ArrayList<>();
         List<String> information = new ArrayList<>();
-        VBox stack = new VBox(new MyCanvas(parseMatrixToLatex(matrix)));
+        VBox stack = new VBox(new MyCanvas(Utils.parseMatrixToLatex(matrix)));
+        stack.setPrefWidth(stage.getWidth());
+        Fraction fraction = Fraction.of(-2);
+        System.out.println(fraction.toFracLatex());
 
         RowReduction.rowReducedEchelon(matrix, (v, text) -> {
-            latexStrings.add(parseMatrixToLatex(v));
+            latexStrings.add(Utils.parseMatrixToLatex(v));
             information.add(text);
         });
         for (int i = 0; i < latexStrings.size(); i++) {
@@ -72,11 +65,15 @@ public class Latex extends Application {
             label.setPadding(new Insets(10, 10, 10, 10));
             stack.getChildren().add(label);
             stack.getChildren().add(canvas);
+            Separator sep = new Separator();
+            sep.setOrientation(Orientation.HORIZONTAL);
+
+            stack.getChildren().add(sep);
         }
 
         ScrollPane s1 = new ScrollPane();
-        s1.setPrefSize(800, 800);
         s1.setContent(stack);
+        s1.setPrefWidth(800);
 
 
         stage.setScene(new Scene(s1));

@@ -31,10 +31,8 @@ public class MyCanvas extends Canvas {
     }
 
     private void draw() {
-        System.out.println("Draw this please");
-        System.out.println("Box " + box.getHeight() * 20 + " " + box.getWidth() * 20);
-        setWidth(400);
-        setHeight(180);
+        setWidth(800);
+        setHeight(200);
 
         double width = getWidth();
         double height = getHeight();
