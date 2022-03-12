@@ -36,7 +36,7 @@ public class Utils {
             }
             answer.append("\\\\");
         }
-        answer.append("\\end{bmatrix} \\equiv");
+        answer.append("\\end{bmatrix}");
         return answer.toString();
     }
 }

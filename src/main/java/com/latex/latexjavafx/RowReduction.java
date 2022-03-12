@@ -51,7 +51,7 @@ public class RowReduction {
                 if (nonZeroIndex != currentRow) {
                     swapRows(v, nonZeroIndex, currentRow);
                     printMartix(v);
-                    callback.accept(v, "Row swap " + (nonZeroIndex + 1) + " with " + (currentRow + 1));
+                    callback.accept(v, "R_" + (nonZeroIndex + 1) + "\\leftrightarrow R_" + (currentRow + 1));
                 }
                 Fraction pivot = v[currentRow][column];
                 pivotPosition[currentRow] = column;
@@ -66,7 +66,7 @@ public class RowReduction {
                         System.out.println("Multiply is " + multiply);
 
                         printMartix(v);
-                        callback.accept(v, "Row " + (row + 1) + " = " + multiply + " * Row " + (currentRow + 1));
+                        callback.accept(v, "R_" + (row + 1) + " \\mathrel{{+}{=}} " + multiply.toFracLatex() + " * R_" + (currentRow + 1));
                     }
                 }
                 printMartix(v);
@@ -79,8 +79,6 @@ public class RowReduction {
         System.out.println(currentRow);
         for (; currentRow >= 0; currentRow--) {
             int column = pivotPosition[currentRow];
-            System.out.println("The column is " + column);
-            System.out.println("Divide row " + currentRow + " with " + v[currentRow][column]);
             Fraction pivot = v[currentRow][column];
             if(pivot.equals(Fraction.ONE)) // skip if the pivot is one
                 continue;
@@ -89,8 +87,9 @@ public class RowReduction {
                 v[currentRow][col] = v[currentRow][col].divide(pivot);
                 System.out.println("Got " + v[currentRow][col]);
             }
+            System.out.println("R_" + (currentRow + 1) + " /= " + pivot.toFracLatex());
+            callback.accept(v, "R_" + (currentRow + 1) + " /= " + pivot.toFracLatex());
             printMartix(v);
-            callback.accept(v, "Divide row " + (currentRow + 1) + " with " + pivot);
 
             for (int row = currentRow - 1; row >= 0; row--) {
                 if (!v[row][column].equals(Fraction.ZERO)) {
@@ -100,7 +99,7 @@ public class RowReduction {
                         v[row][col] = v[row][col].add(v[currentRow][col].multiply(multiply));
                     }
                     printMartix(v);
-                    callback.accept(v, "Row " + (row + 1) + " = " + multiply + " * Row " + (currentRow + 1));
+                    callback.accept(v, "R_" + (row + 1) + " \\mathrel{{+}{=}} " + multiply.toFracLatex() + " * R_" + (currentRow + 1));
                 }
             }
         }

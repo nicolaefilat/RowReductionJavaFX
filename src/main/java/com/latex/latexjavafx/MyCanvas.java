@@ -23,7 +23,7 @@ public class MyCanvas extends Canvas {
         TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 20);
         // the 'Box' seems to be the thing we can draw directly to Graphics2D
         this.box = icon.getBox();
-        setWidth(icon.getTrueIconWidth());
+        setWidth(icon.getTrueIconWidth() + 20 );
         setHeight(icon.getTrueIconHeight() + 20 * 5);
 
 
