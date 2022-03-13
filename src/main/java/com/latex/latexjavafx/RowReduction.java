@@ -4,14 +4,7 @@ import java.util.function.BiConsumer;
 
 public class RowReduction {
 
-    public static void main(String[] args) {
-        double[][] matrix = {
-                {0, 2, 4, 24, 231, 12},
-                {1, 2, 3, 0, 0, 0},
-                {2, 1, 0, 0, 0, 0},
-                {0, 1, 3, 0, 0, 0},
-        };
-    }
+    public static void main(String[] args) {}
 
     private static void printMartix(Fraction[][] matrix) {
         for (Fraction[] doubles : matrix) {
