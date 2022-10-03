@@ -1,5 +1,5 @@
 # RowReductionJavaFX
-Java UI program that displays row reduction steps with Latex
+Java UI program that displays row reduction steps to bring any matrix to row echelon form with Latex
 
 ## Examples 
 
